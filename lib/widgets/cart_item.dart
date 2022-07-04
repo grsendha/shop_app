@@ -37,8 +37,30 @@ class CartItems extends StatelessWidget {
         margin: EdgeInsets.symmetric(horizontal: 15, vertical: 4),
       ),
       direction: DismissDirection.startToEnd,
+      confirmDismiss: (direction) {
+        return showDialog(
+            context: context,
+            builder: (ctx) => AlertDialog(
+                  title: Text('Are You Sure'),
+                  content: Text('Do You want to remove the item from the cart'),
+                  actions: [
+                    FlatButton(
+                      child: Text('YES'),
+                      onPressed: () {
+                        Navigator.of(context).pop(true);
+                      },
+                    ),
+                    FlatButton(
+                      child: Text('NO'),
+                      onPressed: () {
+                        Navigator.of(context).pop(false);
+                      },
+                    )
+                  ],
+                ));
+      },
       onDismissed: (direction) {
-        Provider.of<Cart>(context,listen:false).removeItem(productId);
+        Provider.of<Cart>(context, listen: false).removeItem(productId);
       },
       child: Card(
         margin: EdgeInsets.symmetric(horizontal: 15, vertical: 4),
@@ -47,7 +69,7 @@ class CartItems extends StatelessWidget {
           child: ListTile(
             leading: CircleAvatar(child: FittedBox(child: Text('₹${price}'))),
             title: Text(title),
-            subtitle: Text('Total: ${quantity * price}'),
+            subtitle: Text('Total: ${(quantity * price).toStringAsFixed(1)}'),
             trailing: Text('${quantity} x'),
           ),
         ),

@@ -1,4 +1,4 @@
-// ignore_for_file: sdk_version_ui_as_code
+// ignore_for_file: sdk_version_ui_as_code, sized_box_for_whitespace
 
 import 'package:flutter/material.dart';
 import '../provider/orders.dart' as ord;
@@ -15,11 +15,11 @@ class OrderItem extends StatefulWidget {
 }
 
 class _OrderItemState extends State<OrderItem> {
+  var expanded = false;
   @override
   Widget build(BuildContext context) {
-    var expanded = false;
     return Card(
-      margin: EdgeInsets.all(10),
+      margin: const EdgeInsets.all(10),
       child: Column(
         children: [
           ListTile(
@@ -31,7 +31,7 @@ class _OrderItemState extends State<OrderItem> {
               icon: Icon(expanded ? Icons.expand_less : Icons.expand_more),
               onPressed: () {
                 setState(() {
-                  print('working');
+                  
                   expanded = !expanded;
                 });
               },
@@ -46,8 +46,20 @@ class _OrderItemState extends State<OrderItem> {
                       (prod) => Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(prod.title),
-                          Text('${prod.quantity} x ₹${prod.price}'),
+                          Text(
+                            prod.title,
+                            style:const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                            ),
+                          ),
+                          Text(
+                            '${prod.quantity} x ₹${prod.price}',
+                            style: const TextStyle(
+                              fontSize: 18,
+                              color: Colors.grey,
+                            ),
+                          ),
                         ],
                       ),
                     )
