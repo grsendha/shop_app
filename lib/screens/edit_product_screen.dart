@@ -39,7 +39,11 @@ class _EditProductScreenState extends State<EditProductScreen> {
   }
 
   void saveForm() {
-    form.currentState.save;
+    final isValid = form.currentState.validate();
+    if (!isValid) {
+      return;
+    }
+    form.currentState.save();
     print(editedForm.id);
     print(editedForm.title);
     print(editedForm.description);
@@ -74,6 +78,12 @@ class _EditProductScreenState extends State<EditProductScreen> {
                     ),
                   ),
                 ),
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Plese enter Valid Input';
+                  }
+                  return null;
+                },
                 textInputAction: TextInputAction.next,
                 onFieldSubmitted: (_) {
                   FocusScope.of(context).requestFocus(priceFocusNode);
@@ -98,6 +108,18 @@ class _EditProductScreenState extends State<EditProductScreen> {
                     ),
                   ),
                 ),
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Plese enter Price';
+                  }
+                  if (double.tryParse(value) == null) {
+                    return 'Please enter a valid input';
+                  }
+                  if (double.parse(value) <= 0) {
+                    return 'Please enter a number greater than 0';
+                  }
+                  return null;
+                },
                 textInputAction: TextInputAction.next,
                 keyboardType: TextInputType.number,
                 focusNode: priceFocusNode,
@@ -124,6 +146,12 @@ class _EditProductScreenState extends State<EditProductScreen> {
                     ),
                   ),
                 ),
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Plese enter Valid Input';
+                  }
+                  return null;
+                },
                 textInputAction: TextInputAction.next,
                 maxLines: 3,
                 keyboardType: TextInputType.multiline,
